@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Graphics2D;
-final public class Animate {
+final public class Animation {
 
     JFrame frame;
     DrawPanel drawPanel;
@@ -16,6 +16,10 @@ final public class Animate {
     private int textX = 0;
 	private int textY = 0;
 	private int horseY = 10;
+	private int bubbleY = 0;
+	private int r= 0;
+	private int b= 0;
+	private int g= 0;
 
 	
 	private boolean textRight = false;
@@ -37,9 +41,11 @@ final public class Animate {
     boolean darken = false;
     boolean upHorse = false;
     boolean downHorse = false;
+    boolean addBubble = false;
+    boolean subtractBubble = false;
     
     public static void main(String[] args) {
-        new Animate().go();
+        new Animation().go();
     }
 
     private void go() {
@@ -118,8 +124,7 @@ final public class Animate {
 			g.setColor(new Color(142, 33, 0));
 			g.fillRect(570, 320, 50,80); //door 
 			
-			g.setColor(new Color(209, 189, 75));
-            g.fillOval(390, pupilX, 200, 300);//his body
+
 			g.setColor(new Color(209, 189, 75));
             g.fillOval(190, 270, 200, 125); // This is the muzzle
 			g.setColor(new Color(255, 178, 249));
@@ -131,6 +136,8 @@ final public class Animate {
             g.fillArc(270,100,100,170,305,90);// his back horn
             g.setColor(new Color(209, 189, 75));
             g.fillOval(270, 170, 200, 235);//his head
+            g.fillOval(390, pupilX, 200, 300);//his body
+
             g.setColor(new Color(255,255,255));
             g.fillArc(370,100,100,170,305,90);// his horn
             g.setColor(new Color(0,0,0));
@@ -145,6 +152,8 @@ final public class Animate {
             g.fillRoundRect(220, 366, 100,(oneY+10), 30 , 20);//his jaw
             g.setColor(new Color(102, 0, 153));
             g.fillRoundRect(230, 370, 50,oneY, 30 , 20);//his mouth
+            g.fillArc(300,250,75,70,0,180);
+
             
             g.setColor(Color.GRAY);
             g.fillOval(580,horseY+250, 35,50);//horse head
@@ -161,23 +170,28 @@ final public class Animate {
             g.setColor(Color.RED);
 			g.fillRect(550,250, 100, 80);//the block hiding the horse
             g.setColor(Color.WHITE);
-            g.fillOval(630,150, 100,90);//speech bubble
-            g.fillArc(580,220,100,33,75,-40);
+            g.fillOval(630,bubbleY+150, 100,90);//speech bubble
+            g.fillArc(580,220,bubbleY+100,33,75,-40);
             g.setColor(Color.BLACK);
-            Font courierBold10 = new Font("TimesRoman", Font.BOLD, 20);//Font
+            Font courierBold10 = new Font("TimesRoman", Font.BOLD, 18);//Font
             g.setFont(courierBold10);
-            g.drawString("Johhny JOhnny", 520,120);//Text
+            g.drawString("NEIGH :)", bubbleY+650,200);//Text
+            
             
             Font courierBold11 = new Font("Courier", Font.BOLD, 50);//Font
+            Font monoSpaced1 = new Font("Helvetica", Font.BOLD, 15);//Font
             g.setColor(Color.red);
             g.setFont(courierBold11);
-            g.drawString("BOTTOM TEXT", textX+120,textY+120);//Text
+            g.drawString("KyleWiebe1984", textX+120,textY+120);//Text
             g.setColor(Color.yellow);
             g.setFont(courierBold11);
-            g.drawString("BOTTOM TEXT", textX+125,textY+125);//Text
+            g.drawString("kYlEwIEBE1984", textX+125,textY+125);//Text
             g.setColor(Color.blue);
             g.setFont(courierBold11);
-            g.drawString("LIT", textX+600,textY-57);//Text
+            g.drawString("OwO", 500,100);//Text
+            g.setColor(new Color(76, 90, 112));
+            g.setFont(monoSpaced1);
+            g.drawString("please end my suffering", 100,100);//Text
             
 
 
@@ -193,6 +207,8 @@ final public class Animate {
             checkEyebrowBounds();
             checkCloudBounds();
             checkHorseBounds();
+            moveBubble();
+            checkBubbleBounds();
             moveHorse();
             textBounds();
             moveEyebrow();
@@ -202,7 +218,7 @@ final public class Animate {
             moveClouds();
             moveText();
             try{
-                Thread.sleep(10);
+                Thread.sleep(7);
             } catch (Exception exc){}
             frame.repaint();
         }
@@ -376,6 +392,27 @@ final public class Animate {
         
         
     }
+    private void moveBubble(){
+        if(addBubble){
+        	bubbleY=0;
+        }
+        if(subtractBubble){
+        	bubbleY+=700;
+        }	
+    }
+    private void checkBubbleBounds(){
+    	if(horseY == -50){
 
+        	addBubble = true;
+        	subtractBubble = false;
+        }
+        if(horseY == 10){
+    		addBubble = false;
+            subtractBubble = true;
+
+        }
+        
+        
+    }
 
 }
